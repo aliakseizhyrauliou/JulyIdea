@@ -1,9 +1,10 @@
 using JulyIdea.Services.AuthAPI.Models;
 using JulyIdea.Services.AuthAPI.Repository;
 using JulyIdea.Services.AuthAPI.Responce;
-using JulyIdea.Services.AuthAPI.Services;
+using JulyIdea.Services.AuthAPI.Services.IService;
 using JulyIdea.Services.AuthAPI.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Startidea.Services.AuthAPI.Controllers
@@ -67,6 +68,13 @@ namespace Startidea.Services.AuthAPI.Controllers
             try
             {
                 var candidate = await _userRepository.GetByEmail(loginViewModel.Email);
+                if (candidate == null) 
+                {
+                    responceDto.ErrorMessages = new List<string> { "User not found" };
+                    responceDto.IsSuccess = false;
+                    return responceDto;
+                }
+
                 if (_passwordHashingService.GetHashOfPassword(loginViewModel.Password, candidate.Salt) == candidate.PasswordHash) 
                 {
                     var userTokens = _tokenService.GenerateTokens(candidate);
@@ -86,10 +94,34 @@ namespace Startidea.Services.AuthAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
-        public  bool RefreshToken(string token)
+        public  async Task<ResponceDto> RefreshToken(string refreshToken)
         {
-            return _tokenService.ValidateRefreshToken(token);
+            if (_tokenService.ValidateRefreshToken(refreshToken))
+            {
+                try
+                {
+                    var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+                    var candidate = await _userRepository.GetById(userId);
+
+                    var userTokens = _tokenService.GenerateTokens(candidate);
+                    responceDto.Result = userTokens;
+                    return responceDto;
+
+
+                }
+                catch (Exception ex)
+                {
+                    responceDto.ErrorMessages = new List<string> { ex.Message };
+                    responceDto.IsSuccess = false;
+                    return responceDto;
+                }
+            }
+
+            responceDto.IsSuccess = false;
+            responceDto.ErrorMessages = new List<string> { "Invalid refresh_token" };
+            return responceDto;
         }
     }
 }

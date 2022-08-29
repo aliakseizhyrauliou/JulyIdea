@@ -2,7 +2,7 @@
 using JulyIdea.Services.AuthAPI.ViewModels;
 using System.Security.Claims;
 
-namespace JulyIdea.Services.AuthAPI.Services
+namespace JulyIdea.Services.AuthAPI.Services.IService
 {
     public interface ITokenService
     {
@@ -12,6 +12,6 @@ namespace JulyIdea.Services.AuthAPI.Services
         string GenerateAccessToken(IEnumerable<Claim> userClaims);
         string GenerateRefreshToken(IEnumerable<Claim> userClaims);
         bool ValidateRefreshToken(string refreshToken);
-        
+
     }
 }

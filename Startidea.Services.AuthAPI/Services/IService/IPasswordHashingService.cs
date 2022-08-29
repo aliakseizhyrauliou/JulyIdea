@@ -1,4 +1,4 @@
-﻿namespace JulyIdea.Services.AuthAPI.Services
+﻿namespace JulyIdea.Services.AuthAPI.Services.IService
 {
     public interface IPasswordHashingService
     {

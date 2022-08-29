@@ -11,7 +11,8 @@ namespace JulyIdea.Services.AuthAPI.Repository
         Task Save(T dbModel);
         void Remove(T dbModel);
         Task Remove(long id);
-        Task<bool> Any();
+        Task<bool> AnyAsync();
+        bool Any();
         void SaveList(IEnumerable<T> dbModelsList);
 
     }

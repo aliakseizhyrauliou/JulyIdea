@@ -2,6 +2,7 @@ using JulyIdea.Services.AuthAPI;
 using JulyIdea.Services.AuthAPI.DbStuff;
 using JulyIdea.Services.AuthAPI.Repository;
 using JulyIdea.Services.AuthAPI.Services;
+using JulyIdea.Services.AuthAPI.Services.IService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IDbSeed, DbSeed>();
 
 var connectString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=JulyIdea.Identity;Integrated Security=True;";
 
@@ -59,6 +61,15 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+
+using (var scope = scopeFactory.CreateScope())
+{
+    var dbInitializer = scope.ServiceProvider.GetService<IDbSeed>();
+    dbInitializer.Initialize();
+}
+
 
 app.MapControllers();
 

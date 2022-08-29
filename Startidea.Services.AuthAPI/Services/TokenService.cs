@@ -1,4 +1,5 @@
 ﻿using JulyIdea.Services.AuthAPI.Models;
+using JulyIdea.Services.AuthAPI.Services.IService;
 using JulyIdea.Services.AuthAPI.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -48,7 +49,7 @@ namespace JulyIdea.Services.AuthAPI.Services
             var id = userClaims.Where(claim => claim.Type == "Id");
             var jwt = new JwtSecurityToken(
                 issuer: AuthOptions.ISSUER,
-                audience: "asd",/*AuthOptions.AUDIENCE,*/
+                audience: AuthOptions.AUDIENCE,
                 claims: userClaims.Where(claim => claim.Type == "Id"),
                 expires: DateTime.UtcNow.Add(TimeSpan.FromDays(_refreshTokenExpiresDays)),
                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
@@ -66,7 +67,7 @@ namespace JulyIdea.Services.AuthAPI.Services
 
         }
 
-        public bool ValidateRefreshToken(string authToken)
+        public bool ValidateRefreshToken(string refreshToken)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = new TokenValidationParameters()
@@ -85,10 +86,10 @@ namespace JulyIdea.Services.AuthAPI.Services
 
             try
             {
-                IPrincipal principal = tokenHandler.ValidateToken(authToken, validationParameters, out validatedToken);
+                IPrincipal principal = tokenHandler.ValidateToken(refreshToken, validationParameters, out validatedToken);
 
             }
-            catch (SecurityTokenSignatureKeyNotFoundException ex)
+            catch (SecurityTokenSignatureKeyNotFoundException)
             {
                 return false;
             }

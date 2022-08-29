@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using JulyIdea.Services.AuthAPI.Services.IService;
 
 namespace JulyIdea.Services.AuthAPI.Services
 {

@@ -15,9 +15,15 @@ namespace JulyIdea.Services.AuthAPI.Repository
             _dbSet = _dbContex.Set<T>();
         }
 
-        public async Task<bool> Any()
+        public async Task<bool> AnyAsync()
         {
             return await _dbSet.AnyAsync();
+        }
+
+
+        public bool Any()
+        {
+            return _dbSet.Any();
         }
 
         public async Task<List<T>> GetAll()
