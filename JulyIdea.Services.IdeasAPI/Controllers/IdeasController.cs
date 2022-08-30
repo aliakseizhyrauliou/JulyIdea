@@ -1,6 +1,7 @@
 ﻿using JulyIdea.Services.IdeasAPI.DbStuff.Models;
 using JulyIdea.Services.IdeasAPI.Repositories;
 using JulyIdea.Services.IdeasAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<List<IdeaViewModel>> GetAllIdeas() 
         {
             var ideas = await _ideasRepository.GetAll();
