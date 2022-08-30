@@ -1,3 +1,4 @@
+using AutoMapper;
 using JulyIdea.Services.IdeasAPI;
 using JulyIdea.Services.IdeasAPI.DbStuff;
 using JulyIdea.Services.IdeasAPI.Repositories;
@@ -51,6 +52,12 @@ builder.Services.AddScoped<IDbSeed, DbSeed>();
 var connectString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=JulyIdea.IdeasAPI;Integrated Security=True;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectString));
+
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

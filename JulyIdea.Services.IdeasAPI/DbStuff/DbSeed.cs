@@ -19,7 +19,8 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff
                 {
                     Name = "Create Idea App",
                     Description = "Idea app with chain",
-                    UserId = 8
+                    UserId = 8,
+                    StackFullString = "Angula,ASP.NET"
                 };
                 _dbContext.Ideas.Add(idea);
                 _dbContext.SaveChanges();
@@ -32,23 +33,6 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff
                     RootIdea = idea,
                     UserId = 8
                 };
-
-
-                var stack = new List<Stack>
-                {
-                    new Stack()
-                    {
-                        Idea = idea,
-                        Technology = "Angular"
-                    },
-                    new Stack()
-                    {
-                        Idea = idea,
-                        Technology = "ASP.NET"
-                    }
-                };
-
-                idea.Stack = stack;
                 _dbContext.ChainElements.Add(chainElement);
                 idea.ChainElements.Add(chainElement);
                 _dbContext.SaveChanges();

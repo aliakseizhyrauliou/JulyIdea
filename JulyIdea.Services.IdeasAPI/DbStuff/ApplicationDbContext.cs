@@ -22,14 +22,10 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff
             {
                 x.HasMany(u => u.ChainElements)
                 .WithOne(p => p.RootIdea);
-
-                x.HasMany(u => u.Stack)
-                .WithOne(p => p.Idea);
             });
         }
 
         public DbSet<Idea> Ideas { get; set; }
         public DbSet<ChainElement> ChainElements { get; set; }
-        public DbSet<Stack> Stacks { get; set; }
     }
 }
