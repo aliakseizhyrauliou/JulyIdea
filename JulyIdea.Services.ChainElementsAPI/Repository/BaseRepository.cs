@@ -1,8 +1,8 @@
-﻿using JulyIdea.Services.IdeasAPI.DbStuff;
-using JulyIdea.Services.IdeasAPI.DbStuff.Models;
+﻿using JulyIdea.Services.ChainElementsAPI.DbStuff;
+using JulyIdea.Services.ChainElementsAPI.DbStuff.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace JulyIdea.Services.IdeasAPI.Repositories
+namespace JulyIdea.Services.ChainElementsAPI.Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
@@ -37,10 +37,10 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async void Remove(T dbModel)
+        public void Remove(T dbModel)
         {
             _dbSet.Remove(dbModel);
-            await _dbContex.SaveChangesAsync();
+            _dbContex.SaveChangesAsync();
         }
 
         public async Task Remove(long id)

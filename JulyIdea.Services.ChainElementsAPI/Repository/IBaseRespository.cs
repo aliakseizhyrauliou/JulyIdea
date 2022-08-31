@@ -1,6 +1,6 @@
-﻿using JulyIdea.Services.IdeasAPI.DbStuff.Models;
+﻿using JulyIdea.Services.ChainElementsAPI.DbStuff.Models;
 
-namespace JulyIdea.Services.IdeasAPI.Repositories
+namespace JulyIdea.Services.ChainElementsAPI.Repository
 {
     public interface IBaseRepository<T> where T : BaseModel
     {

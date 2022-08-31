@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using JulyIdea.Services.IdeasAPI.AuthAttributes;
 using JulyIdea.Services.IdeasAPI.DbStuff.Models;
 using JulyIdea.Services.IdeasAPI.Repositories;
 using JulyIdea.Services.IdeasAPI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace JulyIdea.Services.IdeasAPI.Controllers
 {
@@ -94,6 +96,27 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             }
 
             return true;
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<IdeaViewModel> UpdateIdea(IdeaViewModel ideaViewModel) 
+        {
+            if (ModelState.IsValid) 
+            {
+                var userId = int.Parse(HttpContext.User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+                if (ideaViewModel.UserId != userId) 
+                {
+                    //Is't owner of idea
+                    return null;
+                }
+                var mapIdeaDbModel = _mapper.Map<Idea>(ideaViewModel);
+                var dbIdea = await _ideasRepository.Save(mapIdeaDbModel);
+
+                return _mapper.Map<IdeaViewModel>(dbIdea);
+            }
+
+            return null;
         }
 
 
