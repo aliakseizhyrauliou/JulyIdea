@@ -20,21 +20,9 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff
                     Name = "Create Idea App",
                     Description = "Idea app with chain",
                     UserId = 8,
-                    StackFullString = "Angula,ASP.NET"
+                    StackFullString = "Angular,ASP.NET"
                 };
                 _dbContext.Ideas.Add(idea);
-                _dbContext.SaveChanges();
-
-                var chainElement = new ChainElement()
-                {
-                    Descriptions = "Create mobile version",
-                    IsConfirmed = false,
-                    Name = "Mobile",
-                    RootIdea = idea,
-                    UserId = 8
-                };
-                _dbContext.ChainElements.Add(chainElement);
-                idea.ChainElements.Add(chainElement);
                 _dbContext.SaveChanges();
 
             }

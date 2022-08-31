@@ -19,6 +19,5 @@ namespace JulyIdea.Services.IdeasAPI.ViewModels
                 StackFullString = String.Join(",", value);
             }
         }
-        public List<ChainElementViewModel> ChainElements { get; set; } = new List<ChainElementViewModel>();
     }
 }

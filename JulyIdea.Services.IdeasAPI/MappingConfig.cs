@@ -12,13 +12,6 @@ namespace JulyIdea.Services.IdeasAPI
             {
                 config.CreateMap<Idea, IdeaViewModel>()
                     .ReverseMap();
-
-                config.CreateMap<ChainElement, ChainElementViewModel>()
-                    .ForMember(nameof(ChainElementViewModel.RootIdeaId),
-                        i => i
-                        .MapFrom(db => db.RootIdea.Id))
-                    .ReverseMap();
-
             });
 
             return mappingConfig;

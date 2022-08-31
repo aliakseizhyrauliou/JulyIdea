@@ -16,16 +16,6 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff
             base.OnConfiguring(optionsBuilder);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Idea>(x =>
-            {
-                x.HasMany(u => u.ChainElements)
-                .WithOne(p => p.RootIdea);
-            });
-        }
-
         public DbSet<Idea> Ideas { get; set; }
-        public DbSet<ChainElement> ChainElements { get; set; }
     }
 }
