@@ -28,6 +28,13 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
         {
             var dbIdeas = await _ideasRepository.GetAll();
             var ideasViewModels = _mapper.Map<List<IdeaViewModel>>(dbIdeas);
+            foreach (var idea in ideasViewModels) 
+            {
+                if (idea.Description.Length > 300) 
+                {
+                    idea.Description = idea.Description.Substring(0, 300) + "...";
+                }
+            };
 
             return ideasViewModels;
         }
