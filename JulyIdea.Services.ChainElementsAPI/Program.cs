@@ -94,6 +94,8 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseCors(x => x.AllowAnyOrigin());
+
 app.UseAuthentication();
 
 app.UseAuthorization();
