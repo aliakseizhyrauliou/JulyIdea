@@ -11,6 +11,10 @@ namespace JulyIdea.Services.IdeasAPI
             var mappingConfig = new MapperConfiguration(config =>
             {
                 config.CreateMap<Idea, IdeaViewModel>()
+                .ForMember(nameof(IdeaViewModel.CategoryString),
+                    opt => opt
+                    .MapFrom(dbModel =>
+                        dbModel.Category.ToString()))
                     .ReverseMap();
             });
 

@@ -25,7 +25,8 @@ namespace JulyIdea.Services.AuthAPI.Services
             var tokenResponce = new TokenViewModel()
             {
                 AccessToken = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                UserName = candidateForTokens.UserName
             };
 
             return tokenResponce;
@@ -38,7 +39,7 @@ namespace JulyIdea.Services.AuthAPI.Services
                     issuer: AuthOptions.ISSUER,
                     audience: AuthOptions.AUDIENCE,
                     claims: userClaims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_accessTokenExpiresMinutes)),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromSeconds(_accessTokenExpiresMinutes)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -61,7 +62,7 @@ namespace JulyIdea.Services.AuthAPI.Services
         {
             return new List<Claim>() {
                     new Claim("Id", candidateForTokens.Id.ToString()),
-                    new Claim("Role", candidateForTokens.Roles.ToString()),
+                    new Claim(ClaimTypes.Role, candidateForTokens.Roles.ToString()),
                     new Claim("Name", candidateForTokens.FirstName),
                 };
 

@@ -23,7 +23,7 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
         }
 
         [HttpGet]
-
+        [Authorize]
         public async Task<List<IdeaViewModel>> GetAllIdeas()
         {
             var dbIdeas = await _ideasRepository.GetAll();

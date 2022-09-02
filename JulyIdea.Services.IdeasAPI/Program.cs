@@ -98,7 +98,12 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(builder => builder.AllowAnyOrigin());
+app.UseCors(option =>
+{
+    option.AllowAnyOrigin();
+    option.AllowAnyHeader();
+    option.AllowAnyMethod();
+});
 
 app.UseAuthentication();
 
