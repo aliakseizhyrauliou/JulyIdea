@@ -39,6 +39,18 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             return ideasViewModels;
         }
 
+        [HttpGet]
+        public async Task<List<IdeaViewModel>> GetIdeaByName(string name)
+        {
+            if (name == null) 
+            {
+                return null;
+            }
+            var ideas = await _ideasRepository.GetByName(name);
+
+            return _mapper.Map<List<IdeaViewModel>>(ideas);
+        }
+
 
         [HttpGet]
         public async Task<IdeaViewModel> GetIdeaById(long ideaId)
