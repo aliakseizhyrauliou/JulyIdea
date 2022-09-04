@@ -28,14 +28,7 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
         {
             var dbIdeas = await _ideasRepository.GetAll();
             var ideasViewModels = _mapper.Map<List<IdeaViewModel>>(dbIdeas);
-            foreach (var idea in ideasViewModels) 
-            {
-                if (idea.Description.Length > 300) 
-                {
-                    idea.Description = idea.Description.Substring(0, 300) + "...";
-                }
-            };
-
+            BuildIdeasLessDesc(ideasViewModels);
             return ideasViewModels;
         }
 
@@ -47,8 +40,11 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
                 return null;
             }
             var ideas = await _ideasRepository.GetByName(name);
+            var ideasViewModels = _mapper.Map<List<IdeaViewModel>>(ideas);
+            BuildIdeasLessDesc(ideasViewModels);
 
-            return _mapper.Map<List<IdeaViewModel>>(ideas);
+
+            return ideasViewModels;
         }
 
 
@@ -138,6 +134,18 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             return null;
         }
 
+        private List<IdeaViewModel> BuildIdeasLessDesc(List<IdeaViewModel> ideaViewModels) 
+        {
+            ideaViewModels.ForEach(idea =>
+            {
+                if (idea.Description.Length > 300)
+                {
+                    idea.Description = idea.Description.Substring(0, 300) + "...";
+                }
+            });
+
+            return ideaViewModels;
+        }
 
     }
 }

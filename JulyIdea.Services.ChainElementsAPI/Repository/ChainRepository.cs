@@ -8,5 +8,10 @@ namespace JulyIdea.Services.ChainElementsAPI.Repository
         public ChainRepository(ApplicationDbContext dbContex) : base(dbContex)
         {
         }
+
+        public List<ChainElement> GetElementsByIdeaId(long ideaId, bool onlyApproved)
+        {
+            return _dbSet.Where(c => c.RootIdeaId == ideaId && c.isConfirmed == onlyApproved).ToList();
+        }
     }
 }

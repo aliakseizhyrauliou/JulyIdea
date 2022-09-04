@@ -30,6 +30,13 @@ namespace JulyIdea.Services.ChainElementsAPI.Controllers
         }
 
         [HttpGet]
+        public List<ChainElementViewModel> GetChainElementsByIdeaId(long ideaId, bool onlyApproved = false) 
+        {
+            var elements = _chainRepository.GetElementsByIdeaId(ideaId, onlyApproved);
+            return _mapper.Map<List<ChainElementViewModel>>(elements);
+        }
+
+        [HttpGet]
         public async Task<ChainElementViewModel> GetChainById(long chainId) 
         {
             var chain = await _chainRepository.GetById(chainId);
