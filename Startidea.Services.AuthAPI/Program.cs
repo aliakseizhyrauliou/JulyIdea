@@ -1,3 +1,4 @@
+using AutoMapper;
 using JulyIdea.Services.AuthAPI;
 using JulyIdea.Services.AuthAPI.DbStuff;
 using JulyIdea.Services.AuthAPI.Repository;
@@ -48,6 +49,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
         };
     });
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

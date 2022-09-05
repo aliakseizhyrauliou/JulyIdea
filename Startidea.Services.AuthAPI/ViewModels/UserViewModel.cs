@@ -1,17 +1,14 @@
-﻿using JulyIdea.Services.AuthAPI.DbStuff.Models;
-using JulyIdea.Services.AuthAPI.Models.Enums;
+﻿using JulyIdea.Services.AuthAPI.Models.Enums;
 
-namespace JulyIdea.Services.AuthAPI.Models
+namespace JulyIdea.Services.AuthAPI.ViewModels
 {
-    public class User : BaseModel
+    public class UserViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public byte[] Salt { get; set; }
         public int Age { get; set; }
-        public string PasswordHash { get; set; }
         public Roles Roles { get; set; }
     }
 }

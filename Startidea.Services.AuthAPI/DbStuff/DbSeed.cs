@@ -28,7 +28,7 @@ namespace JulyIdea.Services.AuthAPI.DbStuff
                 {
                     UserName = "admin",
                     FirstName = "Alexey",
-                    LasName = "Zhurauliou",
+                    LastName = "Zhurauliou",
                     Age = 20,
                     Email = "admin",
                     Roles = Roles.Admin,

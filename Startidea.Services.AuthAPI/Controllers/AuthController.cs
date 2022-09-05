@@ -1,3 +1,4 @@
+using AutoMapper;
 using JulyIdea.Services.AuthAPI.Models;
 using JulyIdea.Services.AuthAPI.Repository;
 using JulyIdea.Services.AuthAPI.Responce;
@@ -17,15 +18,18 @@ namespace Startidea.Services.AuthAPI.Controllers
         private IPasswordHashingService _passwordHashingService;
         private ITokenService _tokenService;
         private IUserRepository _userRepository;
+        private IMapper _mapper;
 
         public AuthController(IPasswordHashingService passwordHashingService,
             ITokenService tokenService,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IMapper mapper)
         {
             responceDto = new ResponceDto();
             _passwordHashingService = passwordHashingService;
             _tokenService = tokenService;
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -122,6 +126,22 @@ namespace Startidea.Services.AuthAPI.Controllers
             responceDto.IsSuccess = false;
             responceDto.ErrorMessages = new List<string> { "Invalid refresh_token" };
             return responceDto;
+        }
+
+        [HttpGet]
+        public async Task<UserViewModel> GetUserInfo(long userId) 
+        {
+            var user = await _userRepository.GetById(userId);
+            return _mapper.Map<UserViewModel>(user);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<UserViewModel> GetCurrentUserInfo()
+        {
+            var userId = long.Parse(HttpContext.User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+            var user = await _userRepository.GetById(userId);
+            return _mapper.Map<UserViewModel>(user);
         }
     }
 }
