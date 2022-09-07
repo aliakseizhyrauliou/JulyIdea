@@ -134,6 +134,14 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             return null;
         }
 
+        [HttpGet]
+        public List<IdeaViewModel> GetIdeasByUserId(long userId) 
+        {
+            var dbIdeas =  _ideasRepository.GetIdeasByUserId(userId);
+
+            return _mapper.Map<List<IdeaViewModel>>(dbIdeas);
+        }
+
         private List<IdeaViewModel> BuildIdeasLessDesc(List<IdeaViewModel> ideaViewModels) 
         {
             ideaViewModels.ForEach(idea =>

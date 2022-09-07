@@ -40,7 +40,7 @@ namespace JulyIdea.Services.AuthAPI.Services
                     issuer: AuthOptions.ISSUER,
                     audience: AuthOptions.AUDIENCE,
                     claims: userClaims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromSeconds(_accessTokenExpiresMinutes)),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_accessTokenExpiresMinutes)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
