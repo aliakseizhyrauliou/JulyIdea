@@ -131,21 +131,5 @@ namespace Startidea.Services.AuthAPI.Controllers
             responceDto.ErrorMessages = new List<string> { "Invalid refresh_token" };
             return responceDto;
         }
-
-        [HttpGet]
-        public async Task<UserViewModel> GetUserInfo(long userId) 
-        {
-            var user = await _userRepository.GetById(userId);
-            return _mapper.Map<UserViewModel>(user);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<UserViewModel> GetCurrentUserInfo()
-        {
-            var userId = long.Parse(HttpContext.User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
-            var user = await _userRepository.GetById(userId);
-            return _mapper.Map<UserViewModel>(user);
-        }
     }
 }
