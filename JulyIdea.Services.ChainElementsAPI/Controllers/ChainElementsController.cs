@@ -49,6 +49,8 @@ namespace JulyIdea.Services.ChainElementsAPI.Controllers
         {
             if (ModelState.IsValid) 
             {
+                var userId = int.Parse(HttpContext.User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+                chain.OwnerId = userId;
                 var chainDb = await _chainRepository.Save(_mapper.Map<ChainElement>(chain));
                 return _mapper.Map<ChainElementViewModel>(chainDb);
             }

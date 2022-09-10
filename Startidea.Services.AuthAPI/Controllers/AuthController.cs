@@ -48,19 +48,23 @@ namespace Startidea.Services.AuthAPI.Controllers
                 var user = new User()
                 {
                     Email = registerViewModel.Email,
+                    UserName = registerViewModel.UserName,
+                    FirstName = registerViewModel.FirstName,
                     Salt = salt,
+                    Roles = JulyIdea.Services.AuthAPI.Models.Enums.Roles.User,
                     PasswordHash = _passwordHashingService.GetHashOfPassword(registerViewModel.Password, salt)
                 };
 
                 await _userRepository.Save(user);
 
-                responceDto.Result = user;
+                var userTokens = _tokenService.GenerateTokens(user);
+                responceDto.Result = userTokens;
 
                 return responceDto;
             }
             catch (Exception ex)
             {
-                responceDto.ErrorMessages.Add(ex.Message);
+                responceDto.ErrorMessages = new List<string>() { ex.Message };
                 responceDto.IsSuccess = false;
                 return responceDto;
             }
