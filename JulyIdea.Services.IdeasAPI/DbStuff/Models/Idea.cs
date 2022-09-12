@@ -9,5 +9,7 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff.Models
         public string Description { get; set; }
         public string StackFullString { get; set; }
         public IdeaCategory Category { get; set; }
+        public bool IsInGroup { get; set; }
+        public long GroupId { get; set; }
     }
 }

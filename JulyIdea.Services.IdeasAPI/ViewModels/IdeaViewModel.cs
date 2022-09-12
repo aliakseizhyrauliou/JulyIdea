@@ -1,5 +1,6 @@
 ﻿using JulyIdea.Services.IdeasAPI.DbStuff.Models;
 using JulyIdea.Services.IdeasAPI.DbStuff.Models.Enums;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace JulyIdea.Services.IdeasAPI.ViewModels
@@ -13,6 +14,9 @@ namespace JulyIdea.Services.IdeasAPI.ViewModels
         public string StackFullString { get; set; }
         public IdeaCategory Category { get; set; }
         public string CategoryString { get; set; }
+        [DefaultValue(false)]
+        public bool IsInGroup { get; set; }
+        public long GroupId { get; set; }
 
         public List<string> Stack 
         {

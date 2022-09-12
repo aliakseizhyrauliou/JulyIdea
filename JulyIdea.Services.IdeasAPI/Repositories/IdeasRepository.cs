@@ -19,5 +19,10 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
         {
             return _dbSet.Where(x => x.UserId == userId).ToList();
         }
+
+        public IEnumerable<Idea> GetGroupIdea(long groupId) 
+        {
+            return _dbSet.Where(x => x.IsInGroup && x.GroupId == groupId);
+        }
     }
 }

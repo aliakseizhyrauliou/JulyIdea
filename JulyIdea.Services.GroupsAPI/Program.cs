@@ -79,6 +79,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IGroupUserRepository, GroupUserRepository>();
 builder.Services.AddScoped<IDbSeed, DbSeed>();
 
 var app = builder.Build();
@@ -92,6 +93,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();

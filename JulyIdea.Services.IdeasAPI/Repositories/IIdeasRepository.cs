@@ -6,5 +6,6 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
     {
         IEnumerable<Idea> GetIdeasByUserId(long userId);
         Task<IEnumerable<Idea>> GetByName(string name);
+        IEnumerable<Idea> GetGroupIdea(long groupId);
     }
 }

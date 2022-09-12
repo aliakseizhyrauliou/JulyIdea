@@ -72,7 +72,9 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
                 Name = model.Name,
                 Description = model.Description,
                 UserId = userId,
-                StackFullString = model.StackFullString
+                StackFullString = model.StackFullString,
+                IsInGroup = model.IsInGroup,
+                GroupId = model.IsInGroup ? model.GroupId : 0 //if idea in group
             };
 
             await _ideasRepository.Save(idea);
@@ -142,6 +144,14 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             return _mapper.Map<List<IdeaViewModel>>(dbIdeas);
         }
 
+        [HttpGet]
+        public List<IdeaViewModel> GetGroupIdeas(long groupId) 
+        {
+            var dbIdeas = _ideasRepository.GetGroupIdea(groupId);
+            return _mapper.Map<List<IdeaViewModel>>(dbIdeas);
+
+        }
+
         private List<IdeaViewModel> BuildIdeasLessDesc(List<IdeaViewModel> ideaViewModels) 
         {
             ideaViewModels.ForEach(idea =>
@@ -154,6 +164,8 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
 
             return ideaViewModels;
         }
+
+        
 
     }
 }

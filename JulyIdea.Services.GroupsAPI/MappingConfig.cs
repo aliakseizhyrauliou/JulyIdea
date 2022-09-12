@@ -11,6 +11,7 @@ namespace JulyIdea.Services.GroupsAPI
             var mappingConfig = new MapperConfiguration(config =>
             {
                 config.CreateMap<Group, GroupViewModel>().ReverseMap();
+                config.CreateMap<GroupUser, GroupUserViewModel>().ReverseMap();
             });
 
             return mappingConfig;

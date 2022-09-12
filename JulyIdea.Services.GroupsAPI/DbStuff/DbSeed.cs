@@ -1,4 +1,5 @@
-﻿using JulyIdea.Services.GroupsAPI.DbStuff.Models;
+﻿using AutoMapper.Configuration.Annotations;
+using JulyIdea.Services.GroupsAPI.DbStuff.Models;
 
 namespace JulyIdea.Services.GroupsAPI.DbStuff
 {
@@ -13,15 +14,27 @@ namespace JulyIdea.Services.GroupsAPI.DbStuff
 
         public void Initialize()
         {
+            var group = new Group();
             if (!_dbContext.Groups.Any())
             {
-                var group = new Group()
+                group = new Group()
                 {
                     Name = "Find people",
                     Description = "Make Ideas",
                     MembersCount = 0
                 };
                 _dbContext.Groups.Add(group);
+                _dbContext.SaveChanges();
+            }
+            if (!_dbContext.GroupUsers.Any()) 
+            {
+                var GroupUser = new GroupUser()
+                {
+                    GroupId = group.Id,
+                    UserId = 1
+                };
+
+                _dbContext.GroupUsers.Add(GroupUser);
                 _dbContext.SaveChanges();
 
             }
