@@ -2,7 +2,7 @@
 {
     public enum IdeaCategory
     {
-        Development,
+        Development = 1,
         Finance, 
         Art, 
         Design,

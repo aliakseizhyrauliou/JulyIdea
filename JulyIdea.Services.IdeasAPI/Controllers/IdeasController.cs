@@ -74,7 +74,8 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
                 UserId = userId,
                 StackFullString = model.StackFullString,
                 IsInGroup = model.IsInGroup,
-                GroupId = model.IsInGroup ? model.GroupId : 0 //if idea in group
+                GroupId = model.IsInGroup ? model.GroupId : 0,//if idea in group
+                Category = model.Category
             };
 
             await _ideasRepository.Save(idea);
