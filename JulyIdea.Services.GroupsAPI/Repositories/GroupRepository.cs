@@ -7,6 +7,8 @@ namespace JulyIdea.Services.GroupsAPI.Repositories
     {
         public GroupRepository(ApplicationDbContext dbContex) : base(dbContex)
         {
+
         }
+
     }
 }

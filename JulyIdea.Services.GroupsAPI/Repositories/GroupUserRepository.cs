@@ -11,7 +11,9 @@ namespace JulyIdea.Services.GroupsAPI.Repositories
 
         public  List<GroupUser> GetMembersOfGroup(long groupId) 
         {
-            return _dbSet.Where(x => x.GroupId == groupId).ToList();
+            return _dbSet
+                .Where(x => x.GroupId == groupId)
+                .ToList();
         }
 
         public async Task<GroupUser> JoinGroup(long userId, long groupId) 
@@ -33,6 +35,14 @@ namespace JulyIdea.Services.GroupsAPI.Repositories
             return null;
 
         }
+
+        public int MemberCount(long groupId) 
+        {
+            return _dbSet
+                .Where(x => x.GroupId == groupId)
+                .Count();
+        }
+
 
     }
 }

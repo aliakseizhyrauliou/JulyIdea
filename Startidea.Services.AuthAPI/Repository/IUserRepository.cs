@@ -6,5 +6,7 @@ namespace JulyIdea.Services.AuthAPI.Repository
     {
         Task<User> CredentialsIdentification(string email, string password);
         Task<User> GetByEmail(string email);
+        Task<User> GetUserInfoByUserName(string userName);
+
     }
 }

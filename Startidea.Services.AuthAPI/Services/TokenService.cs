@@ -27,7 +27,8 @@ namespace JulyIdea.Services.AuthAPI.Services
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
                 UserName = candidateForTokens.UserName,
-                UserId = candidateForTokens.Id
+                UserId = candidateForTokens.Id,
+                UserRoles = candidateForTokens.Roles
             };
 
             return tokenResponce;

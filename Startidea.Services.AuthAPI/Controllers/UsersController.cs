@@ -28,6 +28,13 @@ namespace JulyIdea.Services.AuthAPI.Controllers
         }
 
         [HttpGet]
+        public async Task<UserViewModel> GetUserInfoByUserName(string userName)
+        {
+            var user = await _userRepository.GetUserInfoByUserName(userName);
+            return _mapper.Map<UserViewModel>(user);
+        }
+
+        [HttpGet]
         [Authorize]
         public async Task<UserViewModel> GetCurrentUserInfo()
         {
@@ -37,9 +44,14 @@ namespace JulyIdea.Services.AuthAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<List<UserViewModel>> GetUsers()
+        public async Task<List<UserViewModel>> GetUsers(bool includeCurrentUser = false)
         {
             var users = await _userRepository.GetAll();
+            if (!includeCurrentUser && User.Identity.IsAuthenticated) 
+            {
+                var currentUserId = long.Parse(User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+                users.Remove(users.SingleOrDefault(x => x.Id == currentUserId));
+            }
             return _mapper.Map<List<UserViewModel>>(users);
         }
     }

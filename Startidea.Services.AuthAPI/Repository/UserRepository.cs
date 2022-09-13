@@ -22,5 +22,10 @@ namespace JulyIdea.Services.AuthAPI.Repository
         {
             return await _dbSet.SingleOrDefaultAsync(x => x.Email == email);
         }
+
+        public async Task<User> GetUserInfoByUserName(string userName)
+        {
+            return await _dbSet.SingleOrDefaultAsync(x => x.UserName == userName);
+        }
     }
 }
