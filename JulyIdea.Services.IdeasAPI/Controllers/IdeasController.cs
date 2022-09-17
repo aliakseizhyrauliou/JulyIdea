@@ -157,8 +157,16 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
         public List<IdeaViewModel> GetIdeasByUserId(long userId) 
         {
             var dbIdeas =  _ideasRepository.GetIdeasByUserId(userId);
+            var ideasViewModel = _mapper.Map<List<IdeaViewModel>>(dbIdeas);
 
-            return _mapper.Map<List<IdeaViewModel>>(dbIdeas);
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUserId = int.Parse(HttpContext.User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+                _ideasRepository.FillIsLikedByCurrentUser(ideasViewModel, currentUserId);
+            }
+
+            BuildIdeasLessDesc(ideasViewModel);
+            return ideasViewModel;
         }
 
         [HttpGet]
