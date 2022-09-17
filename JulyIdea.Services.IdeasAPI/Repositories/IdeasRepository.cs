@@ -6,8 +6,21 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
 {
     public class IdeasRepository : BaseRepository<Idea>, IIdeasRepository
     {
+        private const int _portionCount = 10; //30 in one time
+
+
         public IdeasRepository(ApplicationDbContext dbContex) : base(dbContex)
         {
+        }
+
+
+        public List<Idea> GetPortionOfIdeas(int groupNumber)
+        {
+
+            return _dbSet
+                .Skip((groupNumber - 1) * _portionCount)
+                .Take(_portionCount)
+                .ToList();
         }
 
         public async Task<IEnumerable<Idea>> GetByName(string name)

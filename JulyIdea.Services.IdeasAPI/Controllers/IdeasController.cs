@@ -22,6 +22,14 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             _mapper = mapper;
         }
 
+
+        [HttpGet]
+        public List<IdeaViewModel> GetPortionOfIdeas(int groupNumber) 
+        {
+            var dbGroups = _ideasRepository.GetPortionOfIdeas(groupNumber);
+            return _mapper.Map<List<IdeaViewModel>>(dbGroups);
+        }
+
         [HttpGet]
         [Authorize]
         public async Task<List<IdeaViewModel>> GetAllIdeas()
