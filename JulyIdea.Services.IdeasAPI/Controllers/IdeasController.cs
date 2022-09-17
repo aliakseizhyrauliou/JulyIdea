@@ -26,8 +26,16 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
         [HttpGet]
         public List<IdeaViewModel> GetPortionOfIdeas(int groupNumber) 
         {
-            var dbGroups = _ideasRepository.GetPortionOfIdeas(groupNumber);
-            return _mapper.Map<List<IdeaViewModel>>(dbGroups);
+            var dbIdeas = _ideasRepository.GetPortionOfIdeas(groupNumber);
+            var ideasViewModel = _mapper.Map<List<IdeaViewModel>>(dbIdeas);
+
+            if (User.Identity.IsAuthenticated) 
+            {
+                var userId = int.Parse(HttpContext.User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+                _ideasRepository.FillIsLikedByCurrentUser(ideasViewModel, userId);
+            }
+            BuildIdeasLessDesc(ideasViewModel);
+            return ideasViewModel; 
         }
 
         [HttpGet]
@@ -171,7 +179,7 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IdeaViewModel> Remove(long ideaId)
+        public async Task<IdeaViewModel> RemoveLike(long ideaId)
         {
             var userId = long.Parse(User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
             return _mapper.Map<IdeaViewModel>(await _ideasRepository.RemoveLike(ideaId, userId));

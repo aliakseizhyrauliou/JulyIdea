@@ -1,5 +1,6 @@
 ﻿using JulyIdea.Services.IdeasAPI.DbStuff;
 using JulyIdea.Services.IdeasAPI.DbStuff.Models;
+using JulyIdea.Services.IdeasAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace JulyIdea.Services.IdeasAPI.Repositories
@@ -16,11 +17,11 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
 
         public List<Idea> GetPortionOfIdeas(int groupNumber)
         {
-
             return _dbSet
                 .Skip((groupNumber - 1) * _portionCount)
                 .Take(_portionCount)
                 .ToList();
+
         }
 
         public async Task<IEnumerable<Idea>> GetByName(string name)
@@ -89,5 +90,21 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
                 return null;
             }
         }
+
+        public List<IdeaViewModel> FillIsLikedByCurrentUser(List<IdeaViewModel> ideas, long currentUserId) 
+        {
+            ideas.ForEach(x =>
+            {
+                if (_dbSet
+                    .SingleOrDefault(q => q.Id == x.Id).Likes
+                    .Any(l => l.UserId == currentUserId)) //If in dbIdea there's like of currentUser
+                {
+                    x.IsLikedByCurrentUser = true;
+                }
+            });
+
+            return ideas;
+        }
+
     }
 }
