@@ -15,6 +15,10 @@ namespace JulyIdea.Services.IdeasAPI
                     opt => opt
                     .MapFrom(dbModel =>
                         dbModel.Category.ToString()))
+                .ForMember(nameof(IdeaViewModel.LikesCount),
+                    opt => opt
+                        .MapFrom(dbModel => 
+                            dbModel.Likes.Count()))
                     .ReverseMap();
             });
 

@@ -153,6 +153,22 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
 
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IdeaViewModel> AddLike(long ideaId) 
+        {
+            var userId = long.Parse(User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+            return _mapper.Map<IdeaViewModel>(await _ideasRepository.AddLike(ideaId, userId));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IdeaViewModel> Remove(long ideaId)
+        {
+            var userId = long.Parse(User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+            return _mapper.Map<IdeaViewModel>(await _ideasRepository.RemoveLike(ideaId, userId));
+        }
+
         private List<IdeaViewModel> BuildIdeasLessDesc(List<IdeaViewModel> ideaViewModels) 
         {
             ideaViewModels.ForEach(idea =>

@@ -11,5 +11,7 @@ namespace JulyIdea.Services.IdeasAPI.DbStuff.Models
         public IdeaCategory Category { get; set; }
         public bool IsInGroup { get; set; }
         public long GroupId { get; set; }
+        public virtual List<IdeaLike> Likes { get; set; } = new List<IdeaLike>();
+
     }
 }

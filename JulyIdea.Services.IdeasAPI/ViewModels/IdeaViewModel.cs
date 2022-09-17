@@ -17,6 +17,7 @@ namespace JulyIdea.Services.IdeasAPI.ViewModels
         [DefaultValue(false)]
         public bool IsInGroup { get; set; }
         public long GroupId { get; set; }
+        public int LikesCount { get; set; }
 
         public List<string> Stack 
         {
