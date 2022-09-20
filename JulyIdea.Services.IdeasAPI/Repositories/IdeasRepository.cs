@@ -36,7 +36,9 @@ namespace JulyIdea.Services.IdeasAPI.Repositories
 
         public IEnumerable<Idea> GetGroupIdea(long groupId) 
         {
-            return _dbSet.Where(x => x.IsInGroup && x.GroupId == groupId);
+            return _dbSet
+                .Where(x => x.IsInGroup && x.GroupId == groupId)
+                .ToList();
         }
 
         public async Task<Idea> AddLike(long ideaId, long userId)

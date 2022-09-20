@@ -1,0 +1,7 @@
+﻿namespace JulyIdea.Services.MessangerAPI.DbStuff.Models
+{
+    public abstract class BaseModel
+    {
+        public long Id { get; set; }
+    }
+}

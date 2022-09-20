@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.Services.IdeasAPI"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.Services.ChainElementsAPI", "JulyIdea.Services.ChainElementsAPI\JulyIdea.Services.ChainElementsAPI.csproj", "{3967DB90-2623-4911-9ADE-D1F91CDFBE99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JulyIdea.Services.GroupsAPI", "JulyIdea.Services.GroupsAPI\JulyIdea.Services.GroupsAPI.csproj", "{6017A110-7C7A-4D9E-BC04-7B5E67793F03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.Services.GroupsAPI", "JulyIdea.Services.GroupsAPI\JulyIdea.Services.GroupsAPI.csproj", "{6017A110-7C7A-4D9E-BC04-7B5E67793F03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.Services.MessangerAPI", "JulyIdea.Services.MessangerAPI\JulyIdea.Services.MessangerAPI.csproj", "{0BFB316D-D81C-4249-B55F-0DE2DF012FE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6017A110-7C7A-4D9E-BC04-7B5E67793F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6017A110-7C7A-4D9E-BC04-7B5E67793F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6017A110-7C7A-4D9E-BC04-7B5E67793F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BFB316D-D81C-4249-B55F-0DE2DF012FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BFB316D-D81C-4249-B55F-0DE2DF012FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BFB316D-D81C-4249-B55F-0DE2DF012FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BFB316D-D81C-4249-B55F-0DE2DF012FE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

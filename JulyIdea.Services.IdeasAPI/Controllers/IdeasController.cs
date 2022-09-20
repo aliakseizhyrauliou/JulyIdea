@@ -193,6 +193,7 @@ namespace JulyIdea.Services.IdeasAPI.Controllers
             return _mapper.Map<IdeaViewModel>(await _ideasRepository.RemoveLike(ideaId, userId));
         }
 
+        //Aditional method
         private List<IdeaViewModel> BuildIdeasLessDesc(List<IdeaViewModel> ideaViewModels) 
         {
             ideaViewModels.ForEach(idea =>
