@@ -55,5 +55,28 @@ namespace JulyIdea.Services.MessangerAPI.Controllers
 
             return null;
         }
+
+        [Authorize]
+        [HttpGet]
+
+        public List<DialogViewModel> GetUserDialogs() 
+        {
+            var resultDialogs = new List<DialogViewModel>();
+
+            var userId = long.Parse(User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
+            var dialogUserIds = _messageRepository.GetUsersIdFormUserDialogs(userId);
+
+            foreach (var Id in dialogUserIds) 
+            {
+                resultDialogs.Add(new DialogViewModel()
+                {
+                    UserId = Id,
+                    OwnerId = userId,
+                    LastMessage = _mapper.Map<MessageViewModel>(_messageRepository.GetLastMessageOfTwoUser(userId, Id))
+                });
+            }
+
+            return resultDialogs;
+        }
     }
 }
