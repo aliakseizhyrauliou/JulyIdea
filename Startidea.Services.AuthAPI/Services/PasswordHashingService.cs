@@ -7,6 +7,7 @@ namespace JulyIdea.Services.AuthAPI.Services
     public class PasswordHashingService : IPasswordHashingService
     {
         private const int maximumSaltLength = 32;
+
         public byte[] GenerateSalt()
         {
             var salt = new byte[maximumSaltLength];

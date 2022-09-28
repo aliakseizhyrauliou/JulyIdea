@@ -99,9 +99,9 @@ app.UseRouting();
 
 app.UseCors(option =>
 {
-    option.AllowAnyOrigin();
-    option.AllowAnyHeader();
-    option.AllowAnyMethod();
+    option.WithOrigins("http://localhost:4200")
+    .AllowAnyHeader()
+    .AllowAnyMethod();
 });
 
 app.UseAuthentication();
