@@ -8,5 +8,6 @@ namespace JulyIdea.Services.MessangerAPI.Repositories
         List<long> GetUsersIdFormUserDialogs(long userId);
         Message GetLastMessageOfTwoUser(long firstUserId, long secondUserId);
 
+        List<Message> GetMessagesOfTwoUser(long userOneId, long userTwoId);
     }
 }

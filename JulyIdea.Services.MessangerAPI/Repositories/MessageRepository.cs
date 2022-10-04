@@ -33,5 +33,13 @@ namespace JulyIdea.Services.MessangerAPI.Repositories
 
             return message;
         }
+
+        public List<Message> GetMessagesOfTwoUser(long userOneId, long userTwoId)
+        {
+            var messages = _dbSet.Where(x => x.SenderId == userOneId && x.ReceiverId == userTwoId ||
+                x.ReceiverId == userOneId && x.SenderId == userTwoId).OrderBy(x => x.DateOfSending).ToList();
+
+            return messages;
+        }
     }
 }
