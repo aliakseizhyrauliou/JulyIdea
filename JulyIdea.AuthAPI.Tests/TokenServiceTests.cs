@@ -56,5 +56,26 @@ namespace JulyIdea.AuthAPI.Tests
 
             Assert.NotNull(result); 
         }
+
+        [Fact]
+        public void GeneratedRefreshTokenNotNull() 
+        {
+            var service = new TokenService();
+            var result = service.GenerateRefreshToken(userClaimns);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void IsGenerateTokensCorrectOutput() 
+        {
+            var service = new TokenService();
+            var result = service.GenerateTokens(userMock);
+
+            Assert.NotNull(result);
+            Assert.Equal(result.UserName, userMock.UserName);
+            Assert.Equal(result.UserId, userMock.Id);
+            Assert.Equal(result.UserRoles, userMock.Roles);
+        }
     }
 }

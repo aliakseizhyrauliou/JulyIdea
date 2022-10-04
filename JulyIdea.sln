@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.Services.GroupsAPI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.Services.MessangerAPI", "JulyIdea.Services.MessangerAPI\JulyIdea.Services.MessangerAPI.csproj", "{0BFB316D-D81C-4249-B55F-0DE2DF012FE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JulyIdea.AuthAPI.Tests", "JulyIdea.AuthAPI.Tests\JulyIdea.AuthAPI.Tests.csproj", "{62CF4C3E-3B82-430C-8E15-2FFC723166A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulyIdea.AuthAPI.Tests", "JulyIdea.AuthAPI.Tests\JulyIdea.AuthAPI.Tests.csproj", "{62CF4C3E-3B82-430C-8E15-2FFC723166A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JulyIdea.IdeasAPI.Tests", "JulyIdea.IdeasAPI.Tests\JulyIdea.IdeasAPI.Tests.csproj", "{F8B78222-8A12-4C59-8C61-127854CAC463}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{62CF4C3E-3B82-430C-8E15-2FFC723166A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62CF4C3E-3B82-430C-8E15-2FFC723166A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62CF4C3E-3B82-430C-8E15-2FFC723166A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B78222-8A12-4C59-8C61-127854CAC463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B78222-8A12-4C59-8C61-127854CAC463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B78222-8A12-4C59-8C61-127854CAC463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B78222-8A12-4C59-8C61-127854CAC463}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

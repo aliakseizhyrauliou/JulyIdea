@@ -83,6 +83,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             // валидация ключа безопасности
             ValidateIssuerSigningKey = true,
         };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // если запрос направлен хабу
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/messages"))
+                {
+                    // получаем токен из строки запроса
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 var app = builder.Build();
@@ -97,14 +114,15 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseCors(option =>
-{
-    option.WithOrigins("http://localhost:4200")
-    .AllowAnyHeader()
-    .AllowAnyMethod();
-});
+app.UseCors(builder => builder
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .SetIsOriginAllowed(_ => true)
+            .AllowCredentials()
+        );
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
@@ -114,6 +132,7 @@ using (var scope = scopeFactory.CreateScope())
     var dbInitializer = scope.ServiceProvider.GetService<IDbSeed>();
     dbInitializer.Initialize();
 }
+
 
 app.MapControllers();
 

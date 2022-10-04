@@ -47,10 +47,11 @@ namespace JulyIdea.Services.MessangerAPI.Controllers
                 dbMessage.DateOfSending = DateTime.Now;
 
                 await _messageRepository.Save(dbMessage);
+                var messageViewModel = _mapper.Map<MessageViewModel>(dbMessage);
 
-                await _hubContext.Clients.User(userId).SendAsync("ReceiveMessage", message.Text);
+                await _hubContext.Clients.User(message.ReceiverId.ToString()).SendAsync("ReceiveMessage", messageViewModel);
 
-                return _mapper.Map<MessageViewModel>(dbMessage);
+                return messageViewModel;
             }
 
             return null;
@@ -77,6 +78,14 @@ namespace JulyIdea.Services.MessangerAPI.Controllers
             }
 
             return resultDialogs;
+        }
+
+        [HttpGet]
+        [Authorize]
+
+        public IActionResult CheckServer() 
+        {
+            return Ok();
         }
     }
 }
