@@ -1,6 +1,8 @@
 ﻿using JulyIdea.Services.MessangerAPI.DbStuff;
 using JulyIdea.Services.MessangerAPI.DbStuff.Models;
 using JulyIdea.Services.MessangerAPI.ViewModels;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace JulyIdea.Services.MessangerAPI.Repositories
 {
@@ -26,18 +28,30 @@ namespace JulyIdea.Services.MessangerAPI.Repositories
 
         public Message GetLastMessageOfTwoUser(long firstUserId, long secondUserId) 
         {
-            var message = _dbSet.Where(x => x.ReceiverId == firstUserId && x.SenderId == secondUserId ||
-                x.SenderId == firstUserId && x.ReceiverId == secondUserId)
-                .OrderByDescending(x => x.DateOfSending)
-                .First();
+            var sqlParamsFirst = new SqlParameter("@firstUserId", firstUserId);
+            var sqlParamsSecond = new SqlParameter("@secondUserId", secondUserId);
+            var query = "SELECT TOP 1 * " +
+                "FROM Messages " +
+                "WHERE SenderId = @firstUserId  AND ReceiverId = @secondUserId " +
+                "OR SenderId = @secondUserId AND ReceiverId = @firstUserId " +
+                "ORDER BY DateOfSending ";
+
+            var message = _dbSet.FromSqlRaw(query, sqlParamsFirst, sqlParamsSecond).First();
 
             return message;
         }
 
         public List<Message> GetMessagesOfTwoUser(long userOneId, long userTwoId)
         {
-            var messages = _dbSet.Where(x => x.SenderId == userOneId && x.ReceiverId == userTwoId ||
-                x.ReceiverId == userOneId && x.SenderId == userTwoId).OrderBy(x => x.DateOfSending).ToList();
+            var userOneIdParam = new SqlParameter("@userOne", userOneId);
+            var userTwoParam = new SqlParameter("@userTwo", userTwoId);
+
+            var query = "SELECT * FROM Messages" +
+                " WHERE ReceiverId = @userOne AND SenderId = @userTwo OR " +
+                "ReceiverId = @userTwo AND SenderId = @userOne ORDER BY DateOfSending";
+
+            var messages = _dbSet.FromSqlRaw(query, userOneIdParam, userTwoParam).ToList();
+
 
             return messages;
         }
