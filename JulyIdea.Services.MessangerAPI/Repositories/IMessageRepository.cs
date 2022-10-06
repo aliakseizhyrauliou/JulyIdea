@@ -5,7 +5,7 @@ namespace JulyIdea.Services.MessangerAPI.Repositories
 {
     public interface IMessageRepository : IBaseRepository<Message>
     {
-        List<long> GetUsersIdFormUserDialogs(long userId);
+        List<Tuple<string, long>> GetUsersIdFormUserDialogs(long userId);
         Message GetLastMessageOfTwoUser(long firstUserId, long secondUserId);
 
         List<Message> GetMessagesOfTwoUser(long userOneId, long userTwoId);

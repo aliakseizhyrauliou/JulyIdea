@@ -3,6 +3,7 @@ using JulyIdea.Services.MessangerAPI.DbStuff.Models;
 using JulyIdea.Services.MessangerAPI.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace JulyIdea.Services.MessangerAPI.Repositories
 {
@@ -12,14 +13,14 @@ namespace JulyIdea.Services.MessangerAPI.Repositories
         {
         }
 
-        public List<long> GetUsersIdFormUserDialogs(long userId)
+        public List<Tuple<string, long>> GetUsersIdFormUserDialogs(long userId)
         {
             var resultDialogs = new List<DialogViewModel>();
             var usersIdUserSend = _dbSet.Where(x => x.SenderId == userId)
-                    .Select(x => x.ReceiverId).Distinct();
+                    .Select(x => new Tuple<string, long>(x.ReceiverUserName, x.ReceiverId)).Distinct().ToList();
 
             var userIdUserReceive = _dbSet.Where(x => x.ReceiverId == userId)
-                .Select(x => x.SenderId).Distinct();
+                .Select(x => new Tuple<string, long>(x.SenderUserName, x.SenderId)).Distinct().ToList();
 
             var dialogsUsersId = userIdUserReceive.Union(usersIdUserSend).ToList();
 
@@ -34,7 +35,7 @@ namespace JulyIdea.Services.MessangerAPI.Repositories
                 "FROM Messages " +
                 "WHERE SenderId = @firstUserId  AND ReceiverId = @secondUserId " +
                 "OR SenderId = @secondUserId AND ReceiverId = @firstUserId " +
-                "ORDER BY DateOfSending ";
+                "ORDER BY DateOfSending DESC ";
 
             var message = _dbSet.FromSqlRaw(query, sqlParamsFirst, sqlParamsSecond).First();
 

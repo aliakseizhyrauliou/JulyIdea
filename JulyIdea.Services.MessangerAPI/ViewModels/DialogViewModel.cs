@@ -5,8 +5,7 @@
         public long OwnerId { get; set; }
         public long UserId { get; set; }
         public MessageViewModel LastMessage { get; set; }
-        public string ReceiverFullName { get; set; }
-        public string SenderFullName { get; set; }
+        public string UserName { get; set; }
 
     }
 }

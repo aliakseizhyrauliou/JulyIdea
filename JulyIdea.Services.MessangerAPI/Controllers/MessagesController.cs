@@ -62,18 +62,20 @@ namespace JulyIdea.Services.MessangerAPI.Controllers
 
         public List<DialogViewModel> GetUserDialogs()
         {
+
             var resultDialogs = new List<DialogViewModel>();
 
             var userId = long.Parse(User.Claims.SingleOrDefault(x => x.Type == "Id").Value);
-            var dialogUserIds = _messageRepository.GetUsersIdFormUserDialogs(userId);
+            var dialogUserIds = _messageRepository.GetUsersIdFormUserDialogs(userId); //Tuple<UserName, UserId>
 
             foreach (var Id in dialogUserIds)
             {
                 resultDialogs.Add(new DialogViewModel()
                 {
-                    UserId = Id,
+                    UserId = Id.Item2,
                     OwnerId = userId,
-                    LastMessage = _mapper.Map<MessageViewModel>(_messageRepository.GetLastMessageOfTwoUser(userId, Id))
+                    UserName = Id.Item1,
+                    LastMessage = _mapper.Map<MessageViewModel>(_messageRepository.GetLastMessageOfTwoUser(userId, Id.Item2))
                 });
             }
 
