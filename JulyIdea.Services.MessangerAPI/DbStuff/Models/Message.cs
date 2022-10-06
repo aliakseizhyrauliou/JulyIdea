@@ -7,5 +7,8 @@
         public string Text { get; set; }
         public DateTime DateOfSending { get; set; }
         public bool IsViewed { get; set; }
+        public string ReceiverUserName { get; set; }
+        public string SenderUserName { get; set; }
+
     }
 }
